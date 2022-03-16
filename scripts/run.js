@@ -1,6 +1,6 @@
 const { hexStripZeros } = require("ethers/lib/utils");
 
-const main = async () => {
+// const main = async () => {
     // const [owner, randomPerson] = await hre.ethers.getSigners();
     // const domainContractFactory = await hre.ethers.getContractFactory('Domains');
     // const domainContract = await domainContractFactory.deploy();
@@ -21,32 +21,35 @@ const main = async () => {
 
     // =====================================================
 
-    const domainContractFactory = await hre.ethers.getContractFactory('Domains');
-    
-    //Pass Vinc to the constructor 
-    const domainContract = await domainContractFactory.deploy("Vin-cent");
-
-    await domainContract.deployed();
-
-    // Passing the money variable 
-    let txn = await domainContract.register("sipoi", {value: hre.ethers.utils.parserEther('0.1')});
-    await txn.wait();
-
-    const address = await domainContract.getAddress("sipoi");
-    console.log("Owner of domain sipoi: ", address);
-
-    const balance = await hre.ethers.provider.getBalance(domainContract.address);
-    console.log("Contract balance:", hre.ethers.utils.formatEther(balance));
-
-};
-    const runMain = async () => {
+    const main = async () => {
+        const domainContractFactory = await hre.ethers.getContractFactory('Domains');
+        // We pass in "ninja" to the constructor when deploying
+        const domainContract = await domainContractFactory.deploy("ninja");
+        await domainContract.deployed();
+      
+        console.log("Contract deployed to:", domainContract.address);
+      
+        // We're passing in a second variable - value. This is the moneyyyyyyyyyy
+        let txn = await domainContract.register("mortal",  {value: hre.ethers.utils.parseEther('0.1')});
+        await txn.wait();
+      
+        // const address = await domainContract.getAddress("mortal");
+        console.log("Owner of domain mortal:", address);
+      
+        const balance = await hre.ethers.provider.getBalance(domainContract.address);
+        console.log("Contract balance:", hre.ethers.utils.formatEther(balance));
+      }
+      
+      const runMain = async () => {
         try {
-            await main();
-            process.exit(0);
+          await main();
+          process.exit(0);
         } catch (error) {
-            console.log(error)
-            process.exit(1);
+          console.log(error);
+          process.exit(1);
         }
-};
+      };
+      
+      runMain();
 
 runMain();

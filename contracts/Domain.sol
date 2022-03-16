@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.10;
+pragma solidity ^0.8.0;
 
 // We first import some OpenZeppelin Contracts.
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
@@ -35,8 +35,8 @@ contract Domains is ERC721URIStorage {
   function register(string calldata name) public payable {
     require(domains[name] == address(0));
 
-    uint256 _price = price(name);
-    require(msg.value >= _price, "Not enough Matic paid");
+    // uint256 _price = price(name);
+    // require(msg.value >= _price, "Not enough Matic paid");
 		
 		// Combine the name passed into the function  with the TLD
     string memory _name = string(abi.encodePacked(name, ".", tld));
@@ -58,7 +58,7 @@ contract Domains is ERC721URIStorage {
             '", "description": "A domain on the Ninja name service", "image": "data:image/svg+xml;base64,',
             Base64.encode(bytes(finalSvg)),
             '","length":"',
-            strLen,
+            strLen, 
             '"}'
           )
         )
